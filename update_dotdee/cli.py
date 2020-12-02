@@ -48,6 +48,7 @@ Supported options:
 # Standard library modules.
 import getopt
 import logging
+import os
 import sys
 
 # External dependencies.
@@ -64,8 +65,11 @@ logger = logging.getLogger(__name__)
 
 def main():
     """Command line interface for the ``update-dotdee`` program."""
-    # Initialize logging to the terminal and system log.
-    coloredlogs.install(syslog=True)
+    # Initialize logging to the terminal and (if not otherwise
+    # disabled) to the system log as well.
+    use_syslog = not os.getenv('UPDATE_DOTDEE_USE_SYSLOG',
+                               'True').upper() in ['NO', '0', 'FALSE']
+    coloredlogs.install(syslog=use_syslog)
     # Parse the command line arguments.
     context_opts = {}
     program_opts = {}

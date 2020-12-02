@@ -144,6 +144,26 @@ heavyweight solution. For the Python packages that I've published I wanted a
 more lightweight alternative that simply searches for and loads ``*.ini``
 configuration files. This is why ConfigLoader_ was added in release 5.0.
 
+Known issues
+------------
+
+By default, update-dotdee logs errors to both the terminal and
+to ``syslog``. The use of ``syslog`` logging from Python on Mac
+OS X may result in an exception being thrown::
+
+ --- Logging error ---
+ Traceback (most recent call last):
+   File
+   "/usr/local/Cellar/python@3.9/3.9.0_2/Frameworks/Python.framework/Versions/3.9/lib/python3.9/logging/handlers.py",
+   line 953, in emit
+       self.socket.send(msg)
+       AttributeError: 'SysLogHandler' object has no attribute 'socket'
+
+You can disable ``syslog`` logging by exporting the environment
+variable ``UPDATE_DOTDEE_USE_SYSLOG`` with the value ``NO`` before
+running the program.
+
+
 Contact
 -------
 
